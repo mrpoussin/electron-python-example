@@ -2,7 +2,7 @@ const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
-
+const manualDebug = true
 
 /*************************************************************
  * py process
@@ -38,28 +38,39 @@ const selectPort = () => {
 const createPyProc = () => {
   let script = getScriptPath()
   let port = '' + selectPort()
-
-  if (guessPackaged()) {
-    pyProc = require('child_process').execFile(script, [port])
-  } else {
-    pyProc = require('child_process').spawn('python', [script, port])
-  }
- 
-  if (pyProc != null) {
-    //console.log(pyProc)
-    console.log('child process success on port ' + port)
+  if (!manualDebug)
+  {
+    if (guessPackaged()) {
+      pyProc = require('child_process').execFile(script, [port])
+    } else {
+      pyProc = require('child_process').spawn('python', [script, port])
+    }
+  
+    if (pyProc != null) {
+      //console.log(pyProc)
+      console.log('child process success on port ' + port)
+    }
   }
 }
 
 const exitPyProc = () => {
-  pyProc.kill()
-  pyProc = null
-  pyPort = null
+  if (!manualDebug){
+    pyProc.kill();
+    pyProc = null;
+    pyPort = null;
+  }
 }
+
+process.on('SIGINT', function() {
+    console.log("Caught interrupt signal");
+
+    if (i_should_exit)
+        process.exit();
+});
 
 app.on('ready', createPyProc)
 app.on('will-quit', exitPyProc)
-
+app.on('quit', exitPyProc)
 
 /*************************************************************
  * window management
@@ -72,7 +83,8 @@ const createWindow = () => {
     width: 800, 
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true
     }
   
   })

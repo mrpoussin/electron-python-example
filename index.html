@@ -1,22 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello Calculator!</title>
-  </head>
-  <body>
-    <h1>Hello Calculator!</h1>
-    <p> We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.</p>
-    <p>Input something like <code>1 + 1</code>.</p>
-    <p>This calculator supports <code>+-*/^()</code>, 
-    whitespaces, and integers and floating numbers.</p>
-    <input id="formula" value="1 + 2.0 * 3.1 / (4 ^ 5.6)"></input>
-    <div id="result"></div>
-  </body>
 
-  <script>
-    require('./renderer.js')
-  </script>
+<head>
+  <meta charset="UTF-8">
+  <title>Hello Calculator!</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    
+    <div class="row">
+      <h1>ION Desk</h1>
+    </div>
+    
+    <div class="row">
+      
+        <form>
+          <div class="form-group">
+          <label for="interface-select">Choose a CAN Bus interface:</label>
+          <select class="form-control" id="interface-select">
+            <option value="pcan">PeakCan</option>
+            <option value="pcan">PeakCan</option>
+            <option value="socketcan">SocketCan</option>*
+            <option value="virtual">Virtual</option>
+          </select>
+
+          <label for="baudrate-select">Choose Baudrate</label>
+          <select class="form-control" id="baudrate-select">
+            <option value="500000">500 kb/s</option>
+            <option value="250000">250 kb/s</option>*
+            <option value="125000">125 kb/s</option>
+          </select>
+
+          <label for="can-id-type">Choose Can ID type</label>
+          <select class="form-control" id="can-id-type">
+            <option value="extended">Extended</option>
+            <option value="short">Short</option>*
+          </select>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-lg" id="init_can" type="button">
+          Connect to Can
+        </button>
+      </div>
+    
+    
+
+      <div class="form-group" id="result"></div>
+    </form>
+    </div>
+  </div>
+</body>
+
+<script>
+  require('./renderer.js');
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </html>
