@@ -15,11 +15,12 @@ let formula = document.querySelector('#formula')
 let result = document.querySelector('#result')
 
 formula.addEventListener('input', () => {
-  client.invoke("calc", formula.value, (error, res) => {
+  client.invoke("send_test", (error, res) => {
     if(error) {
       console.error(error)
     } else {
       result.textContent = res
+      console.log(res)
     }
   })
 })

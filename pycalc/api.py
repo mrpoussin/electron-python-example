@@ -2,6 +2,19 @@ from __future__ import print_function
 from calc import calc as real_calc
 import sys
 import zerorpc
+import can_handler
+
+class CanApi(object):
+
+    def __init__(self):
+        self.canHandler = can_handler.CanHandler()
+        
+    def send_test(self):
+        self.canHandler.send_one()
+    
+    def echo(self, text):
+        """echo any text"""
+        return text
 
 class CalcApi(object):
     def calc(self, text):
@@ -23,8 +36,10 @@ def parse_port():
     return '{}'.format(port)
 
 def main():
+
+     
     addr = 'tcp://127.0.0.1:' + parse_port()
-    s = zerorpc.Server(CalcApi())
+    s = zerorpc.Server(CanApi())
     s.bind(addr)
     print('start running on {}'.format(addr))
     s.run()
