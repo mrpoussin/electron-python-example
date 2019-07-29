@@ -1,9 +1,6 @@
 const zerorpc = require("zerorpc")
 const unpickle = require("unpickle")
 
-var $ = global.dataTable =require('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
-
-
 
 let client = new zerorpc.Client()
 
@@ -50,11 +47,11 @@ setInterval(checkStatus,1000)
 setInterval(getMsgList,100)
 function checkStatus(){
   client.invoke("checkCanStatus",(error, res) => {
-  console.log(res)
+ // console.log(res)
 })
 }
 function getMsgList(){
   client.invoke("getMsgList",(error, res) => {
-  console.log(res)
+//  console.log(res)
 })
 }

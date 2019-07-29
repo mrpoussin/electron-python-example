@@ -3,6 +3,7 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const manualDebug = true
+const windowStateKeeper = require('electron-window-state')
 
 /*************************************************************
  * py process
@@ -38,14 +39,13 @@ const selectPort = () => {
 const createPyProc = () => {
   let script = getScriptPath()
   let port = '' + selectPort()
-  if (!manualDebug)
-  {
+  if (!manualDebug) {
     if (guessPackaged()) {
       pyProc = require('child_process').execFile(script, [port])
     } else {
       pyProc = require('child_process').spawn('python', [script, port])
     }
-  
+
     if (pyProc != null) {
       //console.log(pyProc)
       console.log('child process success on port ' + port)
@@ -54,18 +54,18 @@ const createPyProc = () => {
 }
 
 const exitPyProc = () => {
-  if (!manualDebug){
+  if (!manualDebug) {
     pyProc.kill();
     pyProc = null;
     pyPort = null;
   }
 }
 
-process.on('SIGINT', function() {
-    console.log("Caught interrupt signal");
+process.on('SIGINT', function () {
+  console.log("Caught interrupt signal");
 
-    if (i_should_exit)
-        process.exit();
+  if (i_should_exit)
+    process.exit();
 });
 
 app.on('ready', createPyProc)
@@ -76,32 +76,53 @@ app.on('quit', exitPyProc)
  * window management
  *************************************************************/
 
-let mainWindow = null
+let mainWindow = null;
+let secondaryWindow = null;
 
-const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    width: 800, 
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      nodeIntegrationInWorker: true
-    }
-  
+
+
+function createWindow() {
+
+  let winState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800
   })
-  mainWindow.loadURL(require('url').format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+
+
+  mainWindow = new BrowserWindow({
+    minWidth: 500,
+    width: winState.width,
+    x: winState.x,
+    minHeight: 400,
+    height: winState.height,
+    y: winState.y,
+
+    webPreferences: {
+      nodeIntegration: true
+    },
+  })
+
+
+
+  let wc = mainWindow.webContents;
+  console.log(wc);
+  // Load the index.html
+  mainWindow.loadFile('index.html')
+ 
+
+  winState.manage(mainWindow)
+
+  //Load devtools
   mainWindow.webContents.openDevTools()
 
+  //Close the windows
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
 }
 
 app.on('ready', createWindow)
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()

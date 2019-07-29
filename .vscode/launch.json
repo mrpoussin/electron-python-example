@@ -1,6 +1,8 @@
 {
   "version": "0.2.0",
-  "configurations": [{
+  "configurations": [
+    
+    {
       "name": "Python : Fichier actuel",
       "type": "python",
       "request": "launch",
@@ -19,23 +21,28 @@
       "request": "launch",
       "name": "Electron: Main",
       "protocol": "inspector",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
       "runtimeArgs": [
-        "--remote-debugging-port=9223",
-        "."
+          "--remote-debugging-port=9223",
+          "."
       ],
       "windows": {
-        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
-      }
-    },
-    {
+          "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
+      "outputCapture": "std",
+
+  },
+  {
       "name": "Electron: Renderer",
       "type": "chrome",
       "request": "attach",
       "port": 9223,
-      "webRoot": "${workspaceRoot}",
+      "webRoot": "${workspaceFolder}",
       "timeout": 30000
-    }
+  }
+
+
+
   ],
   "compounds": [{
     "name": "Electron: All",
@@ -44,5 +51,7 @@
       "Electron: Main",
       "Electron: Renderer"
     ]
-  }]
+  }],
+    "verbose":"true"
+
 }

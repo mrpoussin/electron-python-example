@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Second Window</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+
+<!-- Bootstrap Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script>let $ = require('jquery');</script>
+<script>require('popper.js');</script>
+<script>require('bootstrap');</script>
+
+  <meta charset="UTF-8">
+  <title>Second Windows</title>
+</head>
+
+<body style="user-select: none; -webkit-app-region:drag;">
+  <div class="container">
+    <h1>Test</h1>
+    <p>Hey bro ! 
+    </p>
+  </div>
+</body>
+
+<script>
+  require('./renderer.js');
+</script>
+</html>
