@@ -6,6 +6,8 @@
   <title>Hello Calculator!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    
 </head>
 
 <body>
@@ -22,7 +24,7 @@
           <label for="interface-select">Choose a CAN Bus interface:</label>
           <select class="form-control" id="interface-select">
             <option value="pcan">PeakCan</option>
-            <option value="pcan">PeakCan</option>
+            <option value="slcan">Sl-Can</option>
             <option value="socketcan">SocketCan</option>*
             <option value="virtual">Virtual</option>
           </select>
@@ -46,14 +48,40 @@
           Connect to Can
         </button>
       </div>
-    
-    
-
       <div class="form-group" id="result"></div>
     </form>
+
+
+    <div class="row">
+
+      <table id="example" class="display dataTable"></table>
+
+    </div>
     </div>
   </div>
 </body>
+
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        data: dataSet,
+        columns: [
+            { title: "Name" },
+            { title: "Position" },
+            { title: "Office" },
+            { title: "Extn." },
+            { title: "Start date" },
+            { title: "Salary" }
+        ]
+    } );
+} );
+
+
+</script>
+
+
+
 
 <script>
   require('./renderer.js');
@@ -64,5 +92,5 @@
   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 </html>

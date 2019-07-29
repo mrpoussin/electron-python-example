@@ -1,6 +1,10 @@
 const zerorpc = require("zerorpc")
 const unpickle = require("unpickle")
 
+var $ = global.dataTable =require('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+
+
+
 let client = new zerorpc.Client()
 
 

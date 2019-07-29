@@ -3,7 +3,7 @@ import can
 from can import Message
 from can.bus import BusState
 import struct
-
+import serial
 
 class myPrinter(can.Listener):
     
@@ -33,8 +33,7 @@ class SimpleMsg:
     def __init__(self,msg):
         self.id = int(msg.arbitration_id)
         self.data = int.from_bytes(msg.data,byteorder='big')
-        print(type(self.id))
-        print('test')
+        
 
     
 
@@ -42,16 +41,14 @@ class CanHandler(object):
     
     def __init__(self):
 
-        self.busType = 'virtual'
+        self.busType = 'pcan'
         self.bitrate = '250000'
         self.canChannel = ''
         self.isExtended = True
         self.bus = None
         self.notifier = None
         self.msgList = []
-       
-
-        print("test")
+        self.pollInterval = 0.1
         
     def connectToBus(self,canSettings):
         
@@ -63,6 +60,7 @@ class CanHandler(object):
         if canSettings[0] == 'pcan':
             self.canChannel = 'PCAN_USBBUS1'
 
+        
         self.bus = can.interface.Bus(bustype = canSettings[0], channel= self.canChannel, bitrate=canSettings[1])
         self.isExtended = canSettings[2]
         self.notifier = can.Notifier(self.bus,[myPrinter(self.msgList)])
